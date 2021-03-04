@@ -18,7 +18,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         {
             _context = cmsShoppingCartDbContext;
         }
-        [Route("[area]/[controller]/{Id?}",Name = "Index")]
+        [Route("[area]/[controller]",Name = "Index")]
         // Get /admin/pages
         public async Task<IActionResult> IndexAsync()
         {
@@ -125,9 +125,23 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index");
+        }
 
 
-
+        [Route("[area]/[controller]/[action]")]
+        [HttpPost]
+        public async Task<IActionResult>Reorder(int[] id)
+        {
+            int count = 1;
+            foreach (var pageId in id)
+            {
+                Page page = await _context.Pages.FindAsync(pageId);
+                page.Sorting = count;
+                _context.Update(page);
+                await _context.SaveChangesAsync();
+                count++;
+            }
+            return Ok();
         }
     }
 }

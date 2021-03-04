@@ -19,7 +19,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Pages" asp-action="Index">Pages</a>
+                            <a class="nav-link text-dark"  asp-area="Admin" asp-controller="Pages" asp-action="Index">Pages</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark"  asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
                         </li>
                     </ul>
                 </div>
@@ -32,8 +35,8 @@
             @RenderBody()
         </main>
     </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

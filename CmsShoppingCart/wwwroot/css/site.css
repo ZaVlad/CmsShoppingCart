@@ -9,9 +9,8 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
-}
-
+color: #0366d6;
+ }
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -69,3 +68,17 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+/*////////////////////////////////////////////////////////////////////////////////*/
+a:hover{
+    opacity: .3 !important;
+}
+
+
+table.sorting tr:not(.home){
+    cursor:pointer;
+}
+.ui-state-highlight{
+    border:1px dashed #ccc;
+}
+
+
