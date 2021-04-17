@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1 class="display-4 pb-5">@ViewBag.CategoryName</h1>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <div class="ajaxbg d-none">
+                <img src="~/Images/e593ab0589d5f1b389e4dfbcce2bce20.gif" width="200" height="200"  class="card-img-overlay"/>
+                <p class="lead alert alert-success text-center d-none">The product has been added</p>
+            </div>
+            <img src="~/media//products/@item.Image" class="img-fluid" alt="" />
+            <h4>
+                @item.Name
+            </h4>
+            <div>
+                @Html.Raw(item.Description)
+            </div>
+            <p>
+                @item.Price.ToString("C2")
+            </p>
+            <p>
+                <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-primary addToCart">Add To Cart</a>
+            </p>
+        </div>
+
+    }
+    @if (@ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex w-100 justify-content-center">
+            <Pagination page-count="@ViewBag.TotalPages" page-target="/products/ProductsByCategory/@ViewBag.CategorySlug"
+                        page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></Pagination>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+            $(function () {
+
+                $("a.addToCart").click(function (e) {
+                    e.preventDefault();
+
+                    let ajaxDiv = $(this).parent().parent().find("div.ajaxbg");
+                    ajaxDiv.removeClass("d-none");
+                    let id = $(this).data("id");
+
+                    $.get('/cart/add/' + id, {}, function (data)
+                    {
+                        $("div.smallcart").html(data);
+                        ajaxDiv.find("img").addClass("d-none");
+                        ajaxDiv.find("p").removeClass("d-none");
+                        setTimeout(() =>
+                        {
+                            ajaxDiv.animate({ opacity: 0 }, function ()
+                            {
+                                $(this).addClass("d-none").fadeTo(.1, 5);
+                                $(this).find("img").removeClass("d-none");
+                                $(this).find("p").addClass("d-none");
+                            });
+                        });
+                    });
+                });
+
+            });
+    </script>
+}
+
+

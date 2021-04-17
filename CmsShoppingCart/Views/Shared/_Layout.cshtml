@@ -16,14 +16,30 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Edit" class="btn btn-primary">My Account</a>
+                            </li>
+
+                            <li class="nav-item ml-1">
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi @User.Identity.Name,Log out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Login" class="btn btn-success">Log in</a>
+                            </li>
+                            <li class="nav-item ml-1">
+                                <a asp-controller="Account" asp-action="Register" class="Register btn btn-primary">Register</a>
+                            </li>
+                        }
+                    </ul>
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @await Component.InvokeAsync("MainMenu")
                     </ul>
                 </div>
             </div>
@@ -31,7 +47,19 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <partial name="_NotificationPartial" />
+            <div class="row">
+                <div class="col-3">
+                    @await Component.InvokeAsync("Categories")
+
+                    <div class="smallcart bg-success mt-3 p-3 text-white">
+                        @await Component.InvokeAsync("SmallCart")
+                    </div>
+                </div>
+                <div class="col">
+                    @RenderBody()
+                </div>
+            </div>
         </main>
     </div>
 

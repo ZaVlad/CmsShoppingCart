@@ -9,7 +9,7 @@ namespace CmsShoppingCart.Models
     public class Page
     {
         public int Id { get; set; }
-        [Required,]
+        [Required]
         [MaxLength(10),MinLength(2, ErrorMessage = "Minimum Length is 2")]
         public string Title { get; set; }
         public string Slug { get; set; }
